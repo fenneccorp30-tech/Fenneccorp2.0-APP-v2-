@@ -1,0 +1,7 @@
+{
+  "name": "Fenneccorp 3.0 | IT Solutions & Consulting",
+  "description": "Premium IT services including Network Infrastructure, Data Science, and Modern Web Development.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
