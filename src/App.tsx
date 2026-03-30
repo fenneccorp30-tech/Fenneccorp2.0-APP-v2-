@@ -150,7 +150,7 @@ const Hero = ({ t }: { t: any }) => {
     <section id="home" ref={containerRef} className="relative h-screen flex items-center overflow-hidden bg-brand-dark text-white">
       <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
         <img 
-          src="https://picsum.photos/seed/server-code-overlay/1920/1080" 
+          src="https://fastly.picsum.photos/id/9/5000/3269.jpg?hmac=cZKbaLeduq7rNB8X-bigYO8bvPIWtT-mh8GRXtU3vPc" 
           alt="Data Center with Code Overlay" 
           className="w-full h-full object-cover opacity-40"
           referrerPolicy="no-referrer"
