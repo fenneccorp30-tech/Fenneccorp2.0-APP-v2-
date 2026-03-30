@@ -280,7 +280,7 @@ const About = ({ t }: { t: any }) => {
               />
             </div>
             <div className="absolute -bottom-10 -right-10 bg-brand-primary text-white p-10 rounded-3xl shadow-xl hidden md:block">
-              <span className="text-5xl font-display font-bold block mb-2">10+</span>
+              <span className="text-5xl font-display font-bold block mb-2">3+</span>
               <span className="text-sm font-bold uppercase tracking-widest opacity-80">{t.about.exp}</span>
             </div>
           </div>
