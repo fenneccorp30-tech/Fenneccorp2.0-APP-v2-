@@ -27,7 +27,7 @@ export const Hero = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
     desc: t.hero.desc,
     cta1: t.hero.cta1,
     cta2: t.hero.cta2,
-    imageUrl: "https://fastly.picsum.photos/id/9/5000/3269.jpg?hmac=cZKbaLeduq7rNB8X-bigYO8bvPIWtT-mh8GRXtU3vPc"
+    imageUrl: "/media/hero.jpg"
   };
 
   return (

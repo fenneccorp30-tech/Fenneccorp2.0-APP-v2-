@@ -21,7 +21,7 @@ export const About = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
     cultureDesc: t.about.cultureDesc,
     qualityTitle: t.about.qualityTitle,
     qualityDesc: t.about.qualityDesc,
-    imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=2000"
+    imageUrl: "/media/about.jpg"
   };
 
   return (
