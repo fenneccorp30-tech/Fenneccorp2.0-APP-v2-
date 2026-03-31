@@ -46,8 +46,14 @@ export const About = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
           <div>
             <span className="text-brand-primary font-bold uppercase tracking-[0.2em] text-xs mb-4 block">{aboutData.badge}</span>
             <h2 className="text-5xl md:text-6xl font-display font-bold tracking-tighter mb-8 leading-tight">
-              {aboutData.title.split(',')[0]}, <br />
-              {aboutData.title.split(',')[1]}
+              {aboutData.title.includes(',') ? (
+                <>
+                  {aboutData.title.split(',')[0]}, <br />
+                  {aboutData.title.split(',')[1]}
+                </>
+              ) : (
+                aboutData.title
+              )}
             </h2>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed font-light">
               {aboutData.desc}
