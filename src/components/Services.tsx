@@ -1,8 +1,10 @@
 import { motion } from "motion/react";
 import { Network, Database, Globe, CheckCircle2, ChevronRight } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Service } from "../types";
 
 interface ServiceCardProps {
-  key?: number | string;
+  key?: React.Key;
   icon: any;
   title: string;
   description: string;
@@ -34,9 +36,34 @@ const ServiceCard = ({ icon: Icon, title, description, features, color, learnMor
   </motion.div>
 );
 
-export const Services = ({ t }: { t: any }) => {
+export const Services = ({ t, lang }: { t: any; lang: 'en' | 'fr' }) => {
+  const [apiServices, setApiServices] = useState<Service[]>([]);
   const icons = [Network, Database, Globe];
   const colors = ["bg-blue-600", "bg-indigo-600", "bg-sky-500"];
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch('/api/services');
+        if (response.ok) {
+          const data = await response.json();
+          setApiServices(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch services:", error);
+      }
+    };
+    fetchServices();
+  }, []);
+
+  // Use API services if available, otherwise fallback to translations
+  const displayServices = apiServices.length > 0 
+    ? apiServices.map(s => ({
+        title: s.title[lang],
+        desc: s.desc[lang],
+        features: s.features[lang]
+      }))
+    : t.serviceItems;
 
   return (
     <section id="services" className="section-padding bg-white">
@@ -55,14 +82,14 @@ export const Services = ({ t }: { t: any }) => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {t.serviceItems.map((s: any, i: number) => (
+          {displayServices.map((s: any, i: number) => (
             <ServiceCard 
               key={i} 
-              icon={icons[i]}
+              icon={icons[i % icons.length]}
               title={s.title}
               description={s.desc}
               features={s.features}
-              color={colors[i]}
+              color={colors[i % colors.length]}
               learnMoreText={t.services.learnMore}
             />
           ))}

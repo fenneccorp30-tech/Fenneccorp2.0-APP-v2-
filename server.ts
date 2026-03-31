@@ -2,6 +2,10 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createServer as createViteServer } from "vite";
+import serviceRoutes from "./server/routes/serviceRoutes";
+import contactRoutes from "./server/routes/contactRoutes";
+import contentRoutes from "./server/routes/contentRoutes";
+import adminRoutes from "./server/routes/adminRoutes";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,7 +14,16 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  // API routes can be added here
+  // Middleware
+  app.use(express.json());
+  app.use("/media", express.static(path.join(process.cwd(), "media")));
+
+  // API routes
+  app.use("/api/services", serviceRoutes);
+  app.use("/api/contact", contactRoutes);
+  app.use("/api/content", contentRoutes);
+  app.use("/api/admin", adminRoutes);
+
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok" });
   });

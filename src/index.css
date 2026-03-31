@@ -1,42 +1,22 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
-  
-  --color-brand-primary: #1E90FF;
-  --color-brand-dark: #0A0A0A;
-  --color-brand-paper: #F5F5F4;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-primary: #0F172A;
+  --color-brand-secondary: #334155;
+  --color-brand-accent: #F27D26;
+  --color-brand-paper: #F8FAFC;
 }
 
-:root {
-  background-color: var(--color-brand-paper);
-  color: var(--color-brand-dark);
-}
-
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.section-padding {
-  padding: 5rem 1.5rem;
-}
-
-@media (min-width: 1024px) {
-  .section-padding {
-    padding: 8rem 4rem;
+@layer base {
+  body {
+    @apply bg-white text-brand-primary font-sans;
   }
 }
 
-.text-balance {
-  text-wrap: balance;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #1E90FF 0%, #00BFFF 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+@layer components {
+  .section-padding {
+    @apply py-24 md:py-32;
+  }
 }
