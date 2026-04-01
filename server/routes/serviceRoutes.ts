@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getServices, getServiceById } from "../controllers/serviceController";
+import { getServices, getServiceById } from "../controllers/serviceController.ts";
 
 const router = Router();
 

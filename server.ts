@@ -2,10 +2,10 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createServer as createViteServer } from "vite";
-import serviceRoutes from "./server/routes/serviceRoutes";
-import contactRoutes from "./server/routes/contactRoutes";
-import contentRoutes from "./server/routes/contentRoutes";
-import adminRoutes from "./server/routes/adminRoutes";
+import serviceRoutes from "./server/routes/serviceRoutes.ts";
+import contactRoutes from "./server/routes/contactRoutes.ts";
+import contentRoutes from "./server/routes/contentRoutes.ts";
+import adminRoutes from "./server/routes/adminRoutes.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

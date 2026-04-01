@@ -1,4 +1,4 @@
-import { Service, AppContent, ContactMessage, NewsletterSubscription } from "./types";
+import { Service, AppContent, ContactMessage, NewsletterSubscription } from "./types.ts";
 
 export const services: Service[] = [
   {

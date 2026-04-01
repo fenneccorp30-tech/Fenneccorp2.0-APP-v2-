@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ContactMessage, NewsletterSubscription } from "../types";
+import { ContactMessage, NewsletterSubscription } from "../types.ts";
 
 // In-memory storage (for demo purposes)
 const messages: ContactMessage[] = [];

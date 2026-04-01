@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { submitContactForm, subscribeNewsletter } from "../controllers/contactController";
+import { submitContactForm, subscribeNewsletter } from "../controllers/contactController.ts";
 
 const router = Router();
 

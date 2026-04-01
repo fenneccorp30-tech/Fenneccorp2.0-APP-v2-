@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { services } from "../data";
+import { services } from "../data.ts";
 
 export const getServices = (req: Request, res: Response) => {
   try {
