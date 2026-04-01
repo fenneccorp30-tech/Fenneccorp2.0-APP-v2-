@@ -1,11 +1,19 @@
 import { Request, Response } from "express";
 import { ContactMessage, NewsletterSubscription } from "../types.ts";
+import { contactMessages, newsletterSubscriptions } from "../data.ts";
+import nodemailer from "nodemailer";
 
-// In-memory storage (for demo purposes)
-const messages: ContactMessage[] = [];
-const subscriptions: NewsletterSubscription[] = [];
+// Email transporter configuration
+// Note: In a real production app, you would provide these via environment variables
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
-export const submitContactForm = (req: Request, res: Response) => {
+export const submitContactForm = async (req: Request, res: Response) => {
   try {
     const { name, email, message } = req.body;
 
@@ -20,11 +28,39 @@ export const submitContactForm = (req: Request, res: Response) => {
       createdAt: new Date().toISOString(),
     };
 
-    messages.push(newMessage);
+    contactMessages.push(newMessage);
     console.log("New contact message received:", newMessage);
+
+    // Send email notification
+    const recipientEmail = "Fenneccrop3.0@gmail.com";
+    
+    const mailOptions = {
+      from: process.env.EMAIL_USER || email,
+      to: recipientEmail,
+      subject: `New Contact Form Submission from ${name}`,
+      text: `
+        Name: ${name}
+        Email: ${email}
+        Message: ${message}
+      `,
+    };
+
+    try {
+      if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+        await transporter.sendMail(mailOptions);
+        console.log(`Email successfully sent to ${recipientEmail}`);
+      } else {
+        console.warn("Email credentials not configured. Skipping real email sending.");
+        console.log(`[MOCK EMAIL] To: ${recipientEmail}, Subject: ${mailOptions.subject}`);
+      }
+    } catch (mailError) {
+      console.error("Error sending email:", mailError);
+      // We don't fail the whole request if email fails, as the message is saved in the dashboard
+    }
 
     res.status(201).json({ message: "Message sent successfully" });
   } catch (error) {
+    console.error("Error in submitContactForm:", error);
     res.status(500).json({ message: "Error submitting contact form" });
   }
 };
@@ -42,7 +78,7 @@ export const subscribeNewsletter = (req: Request, res: Response) => {
       subscribedAt: new Date().toISOString(),
     };
 
-    subscriptions.push(newSubscription);
+    newsletterSubscriptions.push(newSubscription);
     console.log("New newsletter subscription received:", newSubscription);
 
     res.status(201).json({ message: "Subscribed successfully" });
