@@ -32,11 +32,12 @@ export const submitContactForm = async (req: Request, res: Response) => {
     console.log("New contact message received:", newMessage);
 
     // Send email notification
-    const recipientEmail = "Fenneccrop3.0@gmail.com";
+    const recipientEmail = "fenneccrop@gmail.com";
     
     const mailOptions = {
-      from: process.env.EMAIL_USER || email,
+      from: process.env.EMAIL_USER, // Always send from the configured account
       to: recipientEmail,
+      replyTo: email, // Allow replying directly to the sender
       subject: `New Contact Form Submission from ${name}`,
       text: `
         Name: ${name}
