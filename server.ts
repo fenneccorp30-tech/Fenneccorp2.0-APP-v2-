@@ -2,10 +2,21 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createServer as createViteServer } from "vite";
+import dotenv from "dotenv";
 import serviceRoutes from "./server/routes/serviceRoutes.ts";
 import contactRoutes from "./server/routes/contactRoutes.ts";
 import contentRoutes from "./server/routes/contentRoutes.ts";
 import adminRoutes from "./server/routes/adminRoutes.ts";
+
+dotenv.config();
+// Fallback to .env.example if .env is not present (common in some dev environments)
+const result = dotenv.config({ path: ".env.example" });
+if (result.error) {
+  console.log("No .env.example found or error loading it:", result.error.message);
+} else {
+  console.log(".env.example loaded successfully");
+}
+console.log("EMAIL_USER from env:", process.env.EMAIL_USER);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

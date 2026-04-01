@@ -5,14 +5,10 @@ import { HeroContent } from "../types";
 
 export const Hero = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
   const [content, setContent] = useState<HeroContent | null>(null);
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const { scrollY } = useScroll();
+  
+  const y = useTransform(scrollY, [0, 800], ["0%", "50%"]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
   useEffect(() => {
     fetch("/api/content/hero")
@@ -41,9 +37,7 @@ export const Hero = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
   return (
     <section 
       id="home" 
-      ref={containerRef} 
       className="relative h-screen flex items-center overflow-hidden bg-brand-dark text-white"
-      style={{ position: 'relative' }}
     >
       <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
         <img 

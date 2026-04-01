@@ -4,14 +4,21 @@ import { contactMessages, newsletterSubscriptions } from "../data.ts";
 import nodemailer from "nodemailer";
 
 // Email transporter configuration
-// Note: In a real production app, you would provide these via environment variables
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+let transporter: nodemailer.Transporter | null = null;
+
+const getTransporter = () => {
+  if (!transporter) {
+    console.log("Initializing transporter with user:", process.env.EMAIL_USER);
+    transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+  }
+  return transporter;
+};
 
 export const submitContactForm = async (req: Request, res: Response) => {
   try {
@@ -47,8 +54,13 @@ export const submitContactForm = async (req: Request, res: Response) => {
     };
 
     try {
+      console.log("Checking email credentials...");
+      console.log("EMAIL_USER present:", !!process.env.EMAIL_USER);
+      console.log("EMAIL_PASS present:", !!process.env.EMAIL_PASS);
+
       if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-        await transporter.sendMail(mailOptions);
+        const mailTransporter = getTransporter();
+        await mailTransporter.sendMail(mailOptions);
         console.log(`Email successfully sent to ${recipientEmail}`);
       } else {
         console.warn("Email credentials not configured. Skipping real email sending.");

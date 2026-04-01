@@ -20,7 +20,7 @@ export default function App() {
   }
 
   return (
-    <main className="font-sans selection:bg-brand-primary selection:text-white">
+    <main className="relative font-sans selection:bg-brand-primary selection:text-white">
       <Navbar lang={lang} setLang={setLang} t={t} />
       <Hero t={t} lang={lang} />
       <Services t={t} lang={lang} />
