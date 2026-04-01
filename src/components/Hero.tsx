@@ -17,11 +17,15 @@ export const Hero = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
   useEffect(() => {
     fetch("/api/content/hero")
       .then((res) => res.json())
-      .then((data) => setContent(data[lang]))
+      .then((data) => {
+        if (data && data[lang]) {
+          setContent(data[lang]);
+        }
+      })
       .catch((err) => console.error("Error fetching hero content:", err));
   }, [lang]);
 
-  const heroData = content || {
+  const heroData = (content && content.title) ? content : {
     badge: t.hero.badge,
     title: t.hero.title,
     desc: t.hero.desc,
@@ -29,6 +33,10 @@ export const Hero = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
     cta2: t.hero.cta2,
     imageUrl: "/media/hero.jpg"
   };
+
+  const titleWords = (heroData.title || "").split(' ');
+  const firstPart = titleWords.slice(0, -2).join(' ');
+  const lastPart = titleWords.slice(-2).join(' ');
 
   return (
     <section 
@@ -58,8 +66,8 @@ export const Hero = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
               {heroData.badge}
             </span>
             <h1 className="text-6xl md:text-8xl font-display font-bold leading-[0.9] tracking-tighter mb-8 text-balance">
-              {heroData.title.split(' ').slice(0, -2).join(' ')} <br />
-              <span className="gradient-text">{heroData.title.split(' ').slice(-2).join(' ')}</span>
+              {firstPart} <br />
+              <span className="gradient-text">{lastPart}</span>
             </h1>
             <p className="text-xl md:text-2xl text-white/60 font-light max-w-2xl mb-12 leading-relaxed">
               {heroData.desc}

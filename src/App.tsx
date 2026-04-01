@@ -13,6 +13,8 @@ export default function App() {
   const [showAdmin, setShowAdmin] = useState(false);
   const t = translations[lang];
 
+  console.log("App rendering, lang:", lang);
+
   if (showAdmin) {
     return <Admin onBack={() => setShowAdmin(false)} />;
   }

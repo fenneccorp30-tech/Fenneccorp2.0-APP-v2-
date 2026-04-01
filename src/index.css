@@ -7,11 +7,18 @@
   --color-brand-secondary: #334155;
   --color-brand-accent: #F27D26;
   --color-brand-paper: #F8FAFC;
+  --color-brand-dark: #0A0A0A;
 }
 
 @layer base {
   body {
-    @apply bg-white text-brand-primary font-sans;
+    @apply bg-brand-dark text-white font-sans;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-accent to-brand-primary;
   }
 }
 
