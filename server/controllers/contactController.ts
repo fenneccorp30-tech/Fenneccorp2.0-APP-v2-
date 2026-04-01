@@ -8,12 +8,18 @@ let transporter: nodemailer.Transporter | null = null;
 
 const getTransporter = () => {
   if (!transporter) {
-    console.log("Initializing transporter with user:", process.env.EMAIL_USER);
+    const user = process.env.EMAIL_USER;
+    const pass = process.env.EMAIL_PASS?.replace(/\s+/g, ""); // Remove spaces from App Password
+
+    console.log("Initializing transporter with user:", user);
+    
     transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true, // use SSL
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: user,
+        pass: pass,
       },
     });
   }
@@ -42,9 +48,9 @@ export const submitContactForm = async (req: Request, res: Response) => {
     const recipientEmail = "fenneccorp3.0@gmail.com";
     
     const mailOptions = {
-      from: process.env.EMAIL_USER, // Always send from the configured account
+      from: process.env.EMAIL_USER,
       to: recipientEmail,
-      replyTo: email, // Allow replying directly to the sender
+      replyTo: email,
       subject: `New Contact Form Submission from ${name}`,
       text: `
         Name: ${name}
@@ -54,21 +60,31 @@ export const submitContactForm = async (req: Request, res: Response) => {
     };
 
     try {
-      console.log("Checking email credentials...");
-      console.log("EMAIL_USER present:", !!process.env.EMAIL_USER);
-      console.log("EMAIL_PASS present:", !!process.env.EMAIL_PASS);
+      console.log("Attempting to send email...");
+      const user = process.env.EMAIL_USER;
+      const pass = process.env.EMAIL_PASS;
 
-      if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      if (user && pass) {
         const mailTransporter = getTransporter();
-        await mailTransporter.sendMail(mailOptions);
-        console.log(`Email successfully sent to ${recipientEmail}`);
+        
+        // Verify connection before sending
+        await mailTransporter.verify();
+        console.log("SMTP connection verified successfully");
+        
+        const info = await mailTransporter.sendMail(mailOptions);
+        console.log("Email sent successfully:", info.messageId);
       } else {
-        console.warn("Email credentials not configured. Skipping real email sending.");
+        console.warn("Email credentials missing in process.env");
         console.log(`[MOCK EMAIL] To: ${recipientEmail}, Subject: ${mailOptions.subject}`);
       }
-    } catch (mailError) {
-      console.error("Error sending email:", mailError);
-      // We don't fail the whole request if email fails, as the message is saved in the dashboard
+    } catch (mailError: any) {
+      console.error("DETAILED EMAIL ERROR:", {
+        message: mailError.message,
+        code: mailError.code,
+        command: mailError.command,
+        response: mailError.response,
+        stack: mailError.stack
+      });
     }
 
     res.status(201).json({ message: "Message sent successfully" });
