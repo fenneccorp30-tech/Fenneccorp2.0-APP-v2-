@@ -15,12 +15,13 @@ const getTransporter = () => {
     
     transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 465,
-      secure: true, // use SSL
+      port: 587,
+      secure: false, // false for 587 (uses STARTTLS)
       auth: {
         user: user,
         pass: pass,
       },
+      connectionTimeout: 10000 // 10 seconds timeout
     });
   }
   return transporter;
@@ -59,35 +60,33 @@ export const submitContactForm = async (req: Request, res: Response) => {
       `,
     };
 
-    try {
-      console.log("Attempting to send email...");
-      const user = process.env.EMAIL_USER;
-      const pass = process.env.EMAIL_PASS;
+    // Fire and forget email sending (do not block the request)
+    const user = process.env.EMAIL_USER;
+    const pass = process.env.EMAIL_PASS;
 
-      if (user && pass) {
-        const mailTransporter = getTransporter();
-        
-        // Verify connection before sending
-        await mailTransporter.verify();
-        console.log("SMTP connection verified successfully");
-        
-        const info = await mailTransporter.sendMail(mailOptions);
-        console.log("Email sent successfully:", info.messageId);
-      } else {
-        console.warn("Email credentials missing in process.env");
-        console.log(`[MOCK EMAIL] To: ${recipientEmail}, Subject: ${mailOptions.subject}`);
-      }
-    } catch (mailError: any) {
-      console.error("DETAILED EMAIL ERROR:", {
-        message: mailError.message,
-        code: mailError.code,
-        command: mailError.command,
-        response: mailError.response,
-        stack: mailError.stack
-      });
+    if (user && pass) {
+      console.log("Attempting to send email in background...");
+      const mailTransporter = getTransporter();
+      
+      mailTransporter.sendMail(mailOptions)
+        .then((info) => {
+          console.log("Email sent successfully:", info.messageId);
+        })
+        .catch((mailError: any) => {
+          console.error("DETAILED EMAIL ERROR (Background):", {
+            message: mailError.message,
+            code: mailError.code,
+            command: mailError.command,
+            response: mailError.response
+          });
+        });
+    } else {
+      console.warn("Email credentials missing in process.env");
+      console.log(`[MOCK EMAIL] To: ${recipientEmail}, Subject: ${mailOptions.subject}`);
     }
 
-    res.status(201).json({ message: "Message sent successfully" });
+    // Always respond immediately so the UI doesn't hang
+    res.status(201).json({ message: "Message saved and email sending initiated" });
   } catch (error) {
     console.error("Error in submitContactForm:", error);
     res.status(500).json({ message: "Error submitting contact form" });
