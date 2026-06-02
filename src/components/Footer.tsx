@@ -40,11 +40,6 @@ export const Footer = ({ t }: { t: any }) => {
             <p className="max-w-sm text-sm leading-relaxed mb-8">
               Empowering businesses with cutting-edge IT solutions, data-driven insights, and high-performance digital infrastructure.
             </p>
-            <div className="flex gap-6">
-              {["Facebook", "Twitter", "Instagram", "LinkedIn"].map((social) => (
-                <a key={social} href="#" className="text-sm hover:text-white transition-colors">{social}</a>
-              ))}
-            </div>
           </div>
 
           <div>
@@ -85,10 +80,6 @@ export const Footer = ({ t }: { t: any }) => {
           <p className="text-xs">
             &copy; {new Date().getFullYear()} Fenneccorp 3.0. {t.footer.rights}
           </p>
-          <div className="flex gap-8 text-xs">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-          </div>
         </div>
       </div>
     </footer>
