@@ -27,7 +27,7 @@ export const Hero = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
     desc: t.hero.desc,
     cta1: t.hero.cta1,
     cta2: t.hero.cta2,
-    imageUrl: "/media/hero.jpg"
+    imageUrl: "/src/assets/images/hero_network_bg_1792842764121.jpg"
   };
 
   const titleWords = (heroData.title || "").split(' ');
@@ -41,8 +41,8 @@ export const Hero = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
     >
       <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
         <img 
-          src={heroData.imageUrl} 
-          alt="Modern Workspace" 
+          src={heroData.imageUrl || "/src/assets/images/hero_network_bg_1792842764121.jpg"} 
+          alt="" 
           className="w-full h-full object-cover opacity-40"
           referrerPolicy="no-referrer"
         />

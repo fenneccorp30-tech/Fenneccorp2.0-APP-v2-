@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Network, Database, Globe, CheckCircle2, ChevronRight } from "lucide-react";
+import { Network, Database, Globe, CheckCircle2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Service } from "../types";
 
@@ -10,29 +10,27 @@ interface ServiceCardProps {
   description: string;
   features: string[];
   color: string;
-  learnMoreText: string;
 }
 
-const ServiceCard = ({ icon: Icon, title, description, features, color, learnMoreText }: ServiceCardProps) => (
+const ServiceCard = ({ icon: Icon, title, description, features, color }: ServiceCardProps) => (
   <motion.div 
     whileHover={{ y: -10 }}
-    className="bg-white/5 p-8 rounded-3xl border border-white/10 shadow-sm hover:shadow-xl transition-all"
+    className="bg-white/5 p-8 rounded-3xl border border-white/10 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
   >
-    <div className={`w-16 h-16 rounded-2xl ${color} flex items-center justify-center text-white mb-8`}>
-      <Icon className="w-8 h-8" />
+    <div>
+      <div className={`w-16 h-16 rounded-2xl ${color} flex items-center justify-center text-white mb-8`}>
+        <Icon className="w-8 h-8" />
+      </div>
+      <h3 className="text-2xl font-display font-bold mb-4 uppercase tracking-tight text-white">{title}</h3>
+      <p className="text-white/60 mb-8 leading-relaxed">{description}</p>
+      <ul className="space-y-3">
+        {features.map((f, i) => (
+          <li key={i} className="flex items-center gap-3 text-sm font-medium text-white/80">
+            <CheckCircle2 className="w-4 h-4 text-brand-accent" /> {f}
+          </li>
+        ))}
+      </ul>
     </div>
-    <h3 className="text-2xl font-display font-bold mb-4 uppercase tracking-tight text-white">{title}</h3>
-    <p className="text-white/60 mb-8 leading-relaxed">{description}</p>
-    <ul className="space-y-3">
-      {features.map((f, i) => (
-        <li key={i} className="flex items-center gap-3 text-sm font-medium text-white/80">
-          <CheckCircle2 className="w-4 h-4 text-brand-accent" /> {f}
-        </li>
-      ))}
-    </ul>
-    <button className="mt-10 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-brand-accent hover:gap-4 transition-all">
-      {learnMoreText} <ChevronRight className="w-4 h-4" />
-    </button>
   </motion.div>
 );
 
@@ -90,7 +88,6 @@ export const Services = ({ t, lang }: { t: any; lang: 'en' | 'fr' }) => {
               description={s.desc}
               features={s.features}
               color={colors[i % colors.length]}
-              learnMoreText={t.services.learnMore}
             />
           ))}
         </div>
