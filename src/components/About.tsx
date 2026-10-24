@@ -25,7 +25,7 @@ export const About = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
     cultureDesc: t.about.cultureDesc,
     qualityTitle: t.about.qualityTitle,
     qualityDesc: t.about.qualityDesc,
-    imageUrl: "/src/assets/images/network_infrastructure_1792842764483.jpg"
+    imageUrl: "/media/about.jpg"
   };
 
   const title = aboutData.title || "";
@@ -37,7 +37,7 @@ export const About = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
           <div className="relative">
             <div className="aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl border border-white/10">
               <img 
-                src={aboutData.imageUrl || "/src/assets/images/network_infrastructure_1792842764483.jpg"} 
+                src={aboutData.imageUrl || "/media/about.jpg"} 
                 alt="Network Infrastructure Cabling and Server Rack" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"

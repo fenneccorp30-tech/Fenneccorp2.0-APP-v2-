@@ -56,7 +56,7 @@ export const appContent: AppContent = {
       desc: "We combine technical expertise in network infrastructure, data science, and web development to create high-performance solutions.",
       cta1: "Our Services",
       cta2: "Contact Us",
-      imageUrl: "/src/assets/images/hero_network_bg_1792842764121.jpg"
+      imageUrl: "/media/hero.jpg"
     },
     fr: {
       badge: "Innovation & Excellence",
@@ -64,7 +64,7 @@ export const appContent: AppContent = {
       desc: "Nous combinons expertise technique en infrastructure réseau, science des données et développement web pour créer des solutions performantes.",
       cta1: "Nos Services",
       cta2: "Contactez-nous",
-      imageUrl: "/src/assets/images/hero_network_bg_1792842764121.jpg"
+      imageUrl: "/media/hero.jpg"
     }
   },
   about: {
@@ -77,7 +77,7 @@ export const appContent: AppContent = {
       cultureDesc: "We believe in making decisions based on solid data and rigorous analysis.",
       qualityTitle: "Quality Assurance",
       qualityDesc: "Every project undergoes strict quality control to ensure maximum performance.",
-      imageUrl: "/src/assets/images/network_infrastructure_1792842764483.jpg"
+      imageUrl: "/media/about.jpg"
     },
     fr: {
       badge: "À Propos",
@@ -88,7 +88,7 @@ export const appContent: AppContent = {
       cultureDesc: "Nous croyons en la prise de décisions basées sur des données solides et une analyse rigoureuse.",
       qualityTitle: "Assurance Qualité",
       qualityDesc: "Chaque projet subit un contrôle qualité strict pour garantir des performances maximales.",
-      imageUrl: "/src/assets/images/network_infrastructure_1792842764483.jpg"
+      imageUrl: "/media/about.jpg"
     }
   }
 };

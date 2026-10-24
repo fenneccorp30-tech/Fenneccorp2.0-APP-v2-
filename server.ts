@@ -27,7 +27,12 @@ async function startServer() {
 
   // Middleware
   app.use(express.json());
-  app.use("/media", express.static(path.join(process.cwd(), "media")));
+  app.use("/media", express.static(path.join(process.cwd(), "public", "media")));
+  app.use("/assets", express.static(path.join(process.cwd(), "public", "assets")));
+  app.use("/asset", express.static(path.join(process.cwd(), "public", "asset")));
+  app.use("/images", express.static(path.join(process.cwd(), "public", "images")));
+  app.use("/src/assets", express.static(path.join(process.cwd(), "src", "assets")));
+  app.use("/src/asset", express.static(path.join(process.cwd(), "src", "assets")));
 
   // API routes
   app.use("/api/services", serviceRoutes);

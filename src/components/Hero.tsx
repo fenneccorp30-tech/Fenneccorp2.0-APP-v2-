@@ -27,7 +27,7 @@ export const Hero = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
     desc: t.hero.desc,
     cta1: t.hero.cta1,
     cta2: t.hero.cta2,
-    imageUrl: "/src/assets/images/hero_network_bg_1792842764121.jpg"
+    imageUrl: "/media/hero.jpg"
   };
 
   const titleWords = (heroData.title || "").split(' ');
@@ -41,7 +41,7 @@ export const Hero = ({ t, lang }: { t: any; lang: "en" | "fr" }) => {
     >
       <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
         <img 
-          src={heroData.imageUrl || "/src/assets/images/hero_network_bg_1792842764121.jpg"} 
+          src={heroData.imageUrl || "/media/hero.jpg"} 
           alt="" 
           className="w-full h-full object-cover opacity-40"
           referrerPolicy="no-referrer"
